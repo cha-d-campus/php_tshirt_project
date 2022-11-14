@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('tshirts', function (Blueprint $table) {
             $table->id();
             $table->string('model');
+            $table->string('size');
             $table->timestamps();
         });
     }

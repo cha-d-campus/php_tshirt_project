@@ -25,4 +25,8 @@ Route::get('/tshirt', function () {
     return view('welcome_tshirt');
 });
 
-Route::resource('tshirts', 'TshirtController');
+Route::resource('tshirt', \App\Http\Controllers\TshirtController::class);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

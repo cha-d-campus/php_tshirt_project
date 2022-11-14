@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Tshirt;
 
 class TshirtController extends Controller
 {
@@ -13,7 +14,9 @@ class TshirtController extends Controller
      */
     public function index()
     {
-        //
+        $tshirts = Tshirt::all();
+
+        return view('index', compact('tshirts'));
     }
 
     /**
@@ -23,7 +26,7 @@ class TshirtController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -34,7 +37,14 @@ class TshirtController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'model' => 'required|max:255',
+            'size'  => 'required|max:6',
+        ]);
+
+        $tshirt = Tshirt::create($validatedData);
+
+        return redirect('/tshirt')->with('success', 'Votre T-shirt a été créé avec succèss');
     }
 
     /**

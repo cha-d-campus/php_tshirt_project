@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TshirtFormRequest;
 use Illuminate\Http\Request;
 use App\Models\Tshirt;
 
@@ -24,9 +25,13 @@ class TshirtController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('create');
+        $data = [
+            'model' => $request->input('model'),
+            'size' => $request->input('size'),
+        ];
+        return view('create', $data);
     }
 
     /**
@@ -35,16 +40,13 @@ class TshirtController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TshirtFormRequest $request)
     {
-        $validatedData = $request->validate([
-            'model' => 'required|max:255',
-            'size'  => 'required|max:6',
-        ]);
+        $tshirt = new Tshirt();
+        $tshirt -> model = $request->validated('model');
+        $tshirt -> size = $request->validated('size');
 
-        $tshirt = Tshirt::create($validatedData);
-
-        return redirect('/tshirt')->with('success', 'Votre T-shirt a été créé avec succèss');
+        return ;
     }
 
     /**

@@ -1,5 +1,5 @@
 <!-- create.blade.php -->
-@extends('layout_tshirt')
+@extends('layouts.layout_tshirt')
 
 @section('content')
     <style>
@@ -10,7 +10,7 @@
 
     <div class="card uper">
         <div class="card-header text-center">
-           <h3>Créer un nouveau t-shirt</h3>
+            <h3>Créer un nouveau t-shirt</h3>
         </div>
 
         <div class="card-body m-auto">
@@ -21,11 +21,11 @@
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
-                </div><br />
+                </div><br/>
             @endif
 
-            <form method="post" action="{{ route('tshirt.store') }}">
-                .         @csrf
+            <form method="get" action="{{ route('tshirt.create') }}">
+                @csrf
                 <div class="form-group d-flex">
                     <h5 class="mx-2">Modèles :</h5>
                     <div class="d-flex">
@@ -48,9 +48,18 @@
                         <label class="form-check-label mx-2" for="sizeXL">XtraLarge</label>
                     </div>
                 </div>
-
-                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                <button type="submit" class="btn btn-primary">Sélectionner</button>
             </form>
+
+            @if($model)
+                @if($model == 'homme')
+                        <img src="/img/t-shirt_men.png" alt="T-shirt Homme">
+                @elseif($model == 'femme')
+                        <img src="/img/t-shirt_woman.png" alt="T-shirt Femme">
+                @endif
+            @endif
+
+
         </div>
     </div>
 @endsection

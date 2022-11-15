@@ -1,6 +1,6 @@
 <!-- index.blade.php -->
 
-@extends('layout_tshirt')
+@extends('layouts.layout_tshirt')
 
 @section('content')
 
@@ -15,7 +15,7 @@
         @if(session()->get('success'))
             <div class="alert alert-success">
                 {{ session()->get('success') }}
-            </div><br />
+            </div><br/>
         @endif
 
         <table class="table table-striped">

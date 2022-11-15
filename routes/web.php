@@ -17,16 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/coucou', function () {
-    return view('helloworld');
-});
-
-Route::get('/tshirt', function () {
-    return view('welcome_tshirt');
-});
-
 Route::resource('tshirt', \App\Http\Controllers\TshirtController::class);
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/tshirt/create/{model}-{size}', function (Request $request) {
+    return view('create');
+});

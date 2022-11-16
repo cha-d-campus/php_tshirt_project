@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TshirtFormRequest;
 use Illuminate\Http\Request;
 use App\Models\Tshirt;
+use Illuminate\Support\Facades\Storage;
 
 class TshirtController extends Controller
 {
@@ -27,10 +28,14 @@ class TshirtController extends Controller
      */
     public function create(Request $request)
     {
+        $images = Storage::disk('public')->allFiles('predefinedPicturesGallery');
         $data = [
             'model' => $request->input('model'),
-            'size' => $request->input('size'),
+            'size'  => $request->input('size'),
+            'images' => $images,
+            'imgSelected' => $request->input('model').$request->input('size').$request->input('imgSelectedS'),
         ];
+
         return view('create', $data);
     }
 

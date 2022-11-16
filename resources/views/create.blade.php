@@ -23,6 +23,9 @@
                     </ul>
                 </div><br/>
             @endif
+                <h4 class="fw-light text-center text-lg-start mt-4 mb-0">Choisir votre modèle de t-shirt :</h4>
+
+                <hr class="mt-2 mb-5 ">
 
             <form method="get" action="{{ route('tshirt.create') }}">
                 @csrf
@@ -48,15 +51,46 @@
                         <label class="form-check-label mx-2" for="sizeXL">XtraLarge</label>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Sélectionner</button>
+                <button type="submit" class="btn btn-warning mt-2">Sélectionner</button>
             </form>
 
             @if($model)
-                @if($model == 'homme')
-                        <img src="/img/t-shirt_men.png" alt="T-shirt Homme">
-                @elseif($model == 'femme')
-                        <img src="/img/t-shirt_woman.png" alt="T-shirt Femme">
-                @endif
+                <div class="row d-flex d-inline mt-4">
+                    <div class="col-6">
+                        @if($model == 'homme')
+                            <img class="img-thumbnail" src="/img/modelsTshirt/t-shirt_men.png" alt="T-shirt Homme">
+                        @elseif($model == 'femme')
+                            <img class="img-thumbnail" src="/img/modelsTshirt/t-shirt_woman.png" alt="T-shirt Femme">
+                        @endif
+                    </div>
+                    <div class="col-6">
+                        <h4 class="fw-light text-center text-lg-start mt-4 mb-0">Choisir un design :</h4>
+
+                        <hr class="mt-2 mb-5">
+
+                        <form method="get" action="{{ route('tshirt.create') }}">
+                            <div class="row">
+                                <input type="hidden" name="model" value="{{$model}}">
+                                <input type="hidden" name="size" value="{{$size}}">
+                            @foreach($images as $image)
+                                <div class="col-lg-3 col-md-4 col-6">
+                                    <input type="submit" name="imgSelected" id="img_{{basename($image, '/')}}" class="input-hidden" value="{{basename($image, 'predefinedPicturesGallery/')}}"/>
+                                    <label for="img_{{basename($image, '/')}}">
+                                        <div class="mh-100">
+                                            <img class="img-thumbnail" src="/storage/{{$image}}" alt="{{basename($image, '/')}}">
+                                        </div>
+                                    </label>
+                                </div>
+                            @endforeach
+                            </div>
+                        </form>
+                    </div>
+
+
+
+
+
+
             @endif
 
 

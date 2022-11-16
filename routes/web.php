@@ -19,6 +19,3 @@ Route::get('/', function () {
 
 Route::resource('tshirt', \App\Http\Controllers\TshirtController::class);
 
-Route::get('/tshirt/create/{model}-{size}', function (Request $request) {
-    return view('create');
-});

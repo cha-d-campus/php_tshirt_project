@@ -6,3 +6,18 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+.input-hidden {
+    display: none;
+}
+
+input[type=submit]:checked + label>img {
+    border: 2px solid #FFCA2C;
+    box-shadow: 0 0 3px 3px #FFCA2C;
+    height: 80px;
+}
+
+input[type=submit] + label>img {
+    height: 80px;
+    width: auto;
+}

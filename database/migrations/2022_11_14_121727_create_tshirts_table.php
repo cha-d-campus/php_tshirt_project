@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('model');
             $table->string('size');
+            $table->string('url_img');
             $table->timestamps();
         });
     }

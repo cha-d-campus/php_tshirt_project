@@ -6,6 +6,7 @@ use App\Http\Requests\TshirtFormRequest;
 use Illuminate\Http\Request;
 use App\Models\Tshirt;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class TshirtController extends Controller
 {
@@ -17,7 +18,6 @@ class TshirtController extends Controller
     public function index()
     {
         $tshirts = Tshirt::all();
-
         return view('index', compact('tshirts'));
     }
 
@@ -28,12 +28,15 @@ class TshirtController extends Controller
      */
     public function create(Request $request)
     {
-        $images = Storage::disk('public')->allFiles('predefinedPicturesGallery');
+        $images = Storage::disk('public')->allFiles('img/predefinedPicturesGallery');
+        $modelColor = Storage::disk('public')->allFiles('img/modelsTshirt');
         $data = [
+            'modelColor' => $modelColor,
             'model' => $request->input('model'),
             'size'  => $request->input('size'),
             'images' => $images,
-            'imgSelected' => $request->input('model').$request->input('size').$request->input('imgSelectedS'),
+            'imgSelected' => $request->input('imgSelected'),
+            'url_img' => $request->input('url_img')
         ];
 
         return view('create', $data);
@@ -50,8 +53,9 @@ class TshirtController extends Controller
         $tshirt = new Tshirt();
         $tshirt -> model = $request->validated('model');
         $tshirt -> size = $request->validated('size');
-
-        return ;
+        $tshirt -> url_img = $request->validated('url_img');
+        $tshirt ->save();
+        return redirect('/tshirt')->with('success', 'Votre t-shirt a été créé avec succèss !');
     }
 
     /**
@@ -96,6 +100,6 @@ class TshirtController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('index');
+//});
+
 
 Route::resource('tshirt', \App\Http\Controllers\TshirtController::class);
 
+Route::get('/tshirt/merge/{model}/{imgSelected}',[\App\Http\Controllers\ImageInterventionController::class, 'mergeImages'])->name('mergeImages');

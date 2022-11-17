@@ -9,5 +9,5 @@ class Tshirt extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['model', 'size'];
+    protected $fillable = ['model', 'size', 'url_img'];
 }

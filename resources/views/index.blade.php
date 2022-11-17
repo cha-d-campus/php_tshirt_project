@@ -25,18 +25,20 @@
                 <td>ID</td>
                 <td>Model</td>
                 <td>Taille</td>
+                <td>Visuel</td>
                 <td colspan="2">Action</td>
             </tr>
             </thead>
 
             <tbody>
             @foreach($tshirts as $tshirt)
-                <tr>
-                    <td>{{$tshirt->id}}</td>
-                    <td>{{$tshirt->model}}</td>
-                    <td>{{$tshirt->size}}</td>
-                    <td><a href="{{ route('tshirt.edit', $tshirt->id)}}" class="btn btn-primary">Modifier</a></td>
-                    <td>
+                <tr class="h-25">
+                    <td class="align-middle">{{$tshirt->id}}</td>
+                    <td class="align-middle">{{$tshirt->model}}</td>
+                    <td class="align-middle">{{$tshirt->size}}</td>
+                    <td><img src="{{$tshirt->url_img}}" alt="img-tshirt" class="img-thumbnail" style="width: 10rem;"></td>
+                    <td class="align-middle"><a href="{{ route('tshirt.edit', $tshirt->id)}}" class="btn btn-primary">Modifier</a></td>
+                    <td class="align-middle">
                         <form action="{{ route('tshirt.destroy', $tshirt->id)}}" method="post">
                             @csrf
                             @method('DELETE')

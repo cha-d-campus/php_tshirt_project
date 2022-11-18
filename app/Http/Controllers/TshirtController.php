@@ -28,8 +28,14 @@ class TshirtController extends Controller
      */
     public function create(Request $request)
     {
+//        dd($request);
         $images = Storage::disk('public')->allFiles('img/predefinedPicturesGallery');
+        $model = $request->input('model');
         $modelColor = Storage::disk('public')->allFiles('img/modelsTshirt');
+        if($model != null){
+            Storage::disk('public')->copy('img/modelsTshirt/'.$model.'png', 'img/merged/'.$model.'png');
+            $modelColor = Storage::disk('public')->allFiles('img/merged');
+        }
         $data = [
             'modelColor' => $modelColor,
             'model' => $request->input('model'),
@@ -50,10 +56,18 @@ class TshirtController extends Controller
      */
     public function store(TshirtFormRequest $request)
     {
+        $model = $request->validated('model');
+        $size = $request->validated('size');
+
+        Storage::copy('public/img/modelsTshirt/'.$model.'.png','public/img/merged/'.$model.'.png');
+        dd('ok');
+        $img = Image::make($request->url_img);
+        dd('ok');
         $tshirt = new Tshirt();
         $tshirt -> model = $request->validated('model');
         $tshirt -> size = $request->validated('size');
-        $tshirt -> url_img = $request->validated('url_img');
+        $tshirt -> url_img = $url;
+        dd($tshirt);
         $tshirt ->save();
         return redirect('/tshirt')->with('success', 'Votre t-shirt a été créé avec succèss !');
     }
@@ -89,7 +103,20 @@ class TshirtController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+//        $images = Storage::disk('public')->allFiles('img/predefinedPicturesGallery');
+//        $modelColor = Storage::disk('public')->allFiles('img/modelsTshirt');
+//        $tshirt = Tshirt::find($id);
+//        $data = [
+//            'id'=> $id,
+//            'modelColor' => $modelColor,
+//            'model' => $request->input('model'),
+//            'size'  => $request->input('size'),
+//            'images' => $images,
+//            'imgSelected' => $request->input('imgSelected'),
+//            'url_img' => $request->input('url_img')
+//        ];
+//
+//        return view('create', $data);
     }
 
     /**
@@ -100,6 +127,7 @@ class TshirtController extends Controller
      */
     public function destroy($id)
     {
-
+        Tshirt::where('id', $id)->delete();
+        return back();
     }
 }

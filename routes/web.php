@@ -15,11 +15,12 @@ use Intervention\Image\Facades\Image;
 |
 */
 
-//Route::get('/', function () {
-//    return view('index');
-//});
-
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::resource('tshirt', \App\Http\Controllers\TshirtController::class);
 
 Route::get('/tshirt/merge/{model}/{imgSelected}',[\App\Http\Controllers\ImageInterventionController::class, 'mergeImages'])->name('mergeImages');
+
+Route::get('/tshirt/merge/saved/{model}/{imgSelected}',[\App\Http\Controllers\ImageInterventionController::class, 'saveMergedImages'])->name('saveMergedImages');

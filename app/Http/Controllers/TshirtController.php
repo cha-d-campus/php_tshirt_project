@@ -6,6 +6,7 @@ use App\Http\Requests\TshirtFormRequest;
 use App\Services\ImageInterventionService;
 use Illuminate\Http\Request;
 use App\Models\Tshirt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -60,7 +61,8 @@ class TshirtController extends Controller
         $tshirt = new Tshirt();
         $tshirt -> model = $model;
         $tshirt -> size = $size;
-        $tshirt -> url_img ='storage/img/merged/'.$model.'_'.substr(basename($img),0,-4).'_'.$size.'_merged.png';
+        $tshirt -> url_img ='storage/img/merged/'.$model.'_'.$size.'_merged_'.substr(basename($img),0,-4).'.png';
+        $tshirt -> name_img = $img;
 //        dd($tshirt->url_img);
         $tshirt ->save();
         return redirect('/tshirt')->with('success', 'Votre t-shirt a été créé avec succèss !');
@@ -83,9 +85,29 @@ class TshirtController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $tshirt = Tshirt::findOrFail($id);
+        $images = Storage::disk('public')->allFiles('img/predefinedPicturesGallery');
+        $modelColor = Storage::disk('public')->allFiles('img/modelsTshirt');
+        $model =$request->has('model') ? $request->get('model') : $tshirt->model;
+        $size = $request->has('size') ? $request->get('size') : $tshirt->size;
+        $img = $request->has('imgSelected') ? $request->get('imgSelected') :$tshirt->name_img;
+        dump($img);
+        dd($tshirt);
+        if ($request){
+            $data = [
+                'tshirt' => $tshirt,
+                'modelColor' => $modelColor,
+                'model' => $model,
+                'size'  => $size,
+                'images' => $images,
+                'imgSelected' => $img,
+                'url_img' => $request->input('url_img')
+            ];
+        }
+
+        return view('edit', $data);
     }
 
     /**

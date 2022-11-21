@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('model');
             $table->string('size');
             $table->string('url_img');
+            $table->string('name_img');
             $table->timestamps();
         });
     }

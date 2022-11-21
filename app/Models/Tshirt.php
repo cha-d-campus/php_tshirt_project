@@ -14,5 +14,6 @@ class Tshirt extends Model
         'model',
         'size',
         'url_img',
+        'name_img',
     ];
 }

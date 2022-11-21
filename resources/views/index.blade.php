@@ -32,6 +32,7 @@
 
             <tbody>
             @foreach($tshirts as $tshirt)
+{{--                @dd($tshirt->url_img)--}}
                 <tr class="h-25">
                     <td class="align-middle">{{$tshirt->id}}</td>
                     <td class="align-middle">{{$tshirt->model}}</td>

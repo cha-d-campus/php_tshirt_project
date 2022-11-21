@@ -16,6 +16,7 @@ class TshirtFormRequest extends FormRequest
         return [
             'model' => 'required|max:255',
             'size' => 'required|max:4',
+            'img_selected' => 'required',
             'url_img' => 'required'
         ];
     }

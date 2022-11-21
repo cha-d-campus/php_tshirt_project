@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TshirtFormRequest;
+use App\Services\ImageInterventionService;
 use Illuminate\Http\Request;
 use App\Models\Tshirt;
 use Illuminate\Support\Facades\Storage;
@@ -30,12 +31,7 @@ class TshirtController extends Controller
     {
 //        dd($request);
         $images = Storage::disk('public')->allFiles('img/predefinedPicturesGallery');
-        $model = $request->input('model');
         $modelColor = Storage::disk('public')->allFiles('img/modelsTshirt');
-        if($model != null){
-            Storage::disk('public')->copy('img/modelsTshirt/'.$model.'png', 'img/merged/'.$model.'png');
-            $modelColor = Storage::disk('public')->allFiles('img/merged');
-        }
         $data = [
             'modelColor' => $modelColor,
             'model' => $request->input('model'),
@@ -54,20 +50,18 @@ class TshirtController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TshirtFormRequest $request)
+    public function store(TshirtFormRequest $request, ImageInterventionService $imgInterService)
     {
         $model = $request->validated('model');
         $size = $request->validated('size');
-
+        $img = $request->validated('img_selected');
         Storage::copy('public/img/modelsTshirt/'.$model.'.png','public/img/merged/'.$model.'.png');
-        dd('ok');
-        $img = Image::make($request->url_img);
-        dd('ok');
+        $imgInterService->mergedImage($model, $img, $size, true);
         $tshirt = new Tshirt();
-        $tshirt -> model = $request->validated('model');
-        $tshirt -> size = $request->validated('size');
-        $tshirt -> url_img = $url;
-        dd($tshirt);
+        $tshirt -> model = $model;
+        $tshirt -> size = $size;
+        $tshirt -> url_img ='storage/img/merged/'.$model.'_'.substr(basename($img),0,-4).'_'.$size.'_merged.png';
+//        dd($tshirt->url_img);
         $tshirt ->save();
         return redirect('/tshirt')->with('success', 'Votre t-shirt a été créé avec succèss !');
     }

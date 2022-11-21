@@ -32,7 +32,7 @@
                     <div class="col-6">
                         <h5 class="mx-2">Tailles :</h5>
                         <div class="mt-4">
-                            <input type="radio" id="sizeS" class="form-check-input mx-2" name="size" value="S">
+                            <input type="radio" id="sizeS" class="form-check-input mx-2" name="size" value="S" checked>
                             <label class="form-check-label mx-2" for="sizeS">Small</label>
                             <input type="radio" id="sizeM" class="form-check-input mx-2" name="size" value="M">
                             <label class="form-check-label mx-2" for="sizeM">Medium</label>
@@ -65,7 +65,9 @@
                     {{--<button type="submit" class="btn btn-warning mt-2 col-3">Sélectionner</button>--}}
                 </form>
             </div>
+            @php
 
+            @endphp
             @if($model)
 
                 <div class="row d-flex d-inline mt-2 mx-5 mb-2">
@@ -75,10 +77,10 @@
                         @if($model == 'tshirt-black')
                             @if($imgSelected)
                             @php
-                                $mergeImg = route('mergeImages', [$model, $imgSelected]);
+                                $mergeImg = route('mergeImages', [$model, $imgSelected, $size]);
                             @endphp
                             {{-- Mettre une route capable d'afficher mon rendu --}}
-                                <img class="img-thumbnail" src="{{$mergeImg }}"
+                                <img class="img-thumbnail" src="{{$mergeImg}}"
                                      alt="T-shirt black - {{$imgSelected}} ">
                             @else
                                 <img class="img-thumbnail" src="../storage/img/modelsTshirt/tshirt-black.png"
@@ -87,7 +89,7 @@
                         @elseif($model == 'tshirt-white')
                             @if($imgSelected)
                                 @php
-                                    $mergeImg = route('mergeImages', [$model, $imgSelected]);
+                                    $mergeImg = route('mergeImages', [$model, $imgSelected, $size]);
                                 @endphp
                                 <img class="img-thumbnail" src="{{$mergeImg}}"
                                      alt="T-shirt black - {{$imgSelected}} ">
@@ -126,6 +128,7 @@
                             @csrf
                             <input type="hidden" name="model" value="{{$model}}">
                             <input type="hidden" name="size" value="{{$size}}">
+                            <input type="hidden" name="img_selected" value="{{$imgSelected}}">
                             <input type="hidden" name="url_img" value="{{$mergeImg}}">
                             <button type="submit" class="btn btn-warning mt-2 col-3">Valider mon choix</button>
                         </form>

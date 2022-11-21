@@ -21,6 +21,6 @@ Route::get('/', function () {
 
 Route::resource('tshirt', \App\Http\Controllers\TshirtController::class);
 
-Route::get('/tshirt/merge/{model}/{imgSelected}',[\App\Http\Controllers\ImageInterventionController::class, 'mergeImages'])->name('mergeImages');
+Route::get('/tshirt/merge/{model}/{size}/{imgSelected}/',[\App\Http\Controllers\ImageInterventionController::class, 'mergeImages'])->name('mergeImages');
 
-Route::get('/tshirt/merge/saved/{model}/{imgSelected}',[\App\Http\Controllers\ImageInterventionController::class, 'saveMergedImages'])->name('saveMergedImages');
+//Route::get('/tshirt/merge/saved/{model}/{imgSelected}',[\App\Http\Controllers\ImageInterventionController::class, 'saveMergedImages'])->name('saveMergedImages');

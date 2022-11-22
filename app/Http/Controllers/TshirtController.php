@@ -30,7 +30,6 @@ class TshirtController extends Controller
      */
     public function create(Request $request)
     {
-//        dd($request);
         $images = Storage::disk('public')->allFiles('img/predefinedPicturesGallery');
         $modelColor = Storage::disk('public')->allFiles('img/modelsTshirt');
         $data = [
@@ -63,7 +62,6 @@ class TshirtController extends Controller
         $tshirt -> size = $size;
         $tshirt -> url_img ='storage/img/merged/'.$model.'_'.$size.'_merged_'.substr(basename($img),0,-4).'.png';
         $tshirt -> name_img = $img;
-//        dd($tshirt->url_img);
         $tshirt ->save();
         return redirect('/tshirt')->with('success', 'Votre t-shirt a été créé avec succèss !');
     }
@@ -93,8 +91,6 @@ class TshirtController extends Controller
         $model =$request->has('model') ? $request->get('model') : $tshirt->model;
         $size = $request->has('size') ? $request->get('size') : $tshirt->size;
         $img = $request->has('imgSelected') ? $request->get('imgSelected') :$tshirt->name_img;
-        dump($img);
-        dd($tshirt);
         if ($request){
             $data = [
                 'tshirt' => $tshirt,
@@ -117,22 +113,20 @@ class TshirtController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TshirtFormRequest $request, $id, ImageInterventionService $imgInterService)
     {
-//        $images = Storage::disk('public')->allFiles('img/predefinedPicturesGallery');
-//        $modelColor = Storage::disk('public')->allFiles('img/modelsTshirt');
-//        $tshirt = Tshirt::find($id);
-//        $data = [
-//            'id'=> $id,
-//            'modelColor' => $modelColor,
-//            'model' => $request->input('model'),
-//            'size'  => $request->input('size'),
-//            'images' => $images,
-//            'imgSelected' => $request->input('imgSelected'),
-//            'url_img' => $request->input('url_img')
-//        ];
-//
-//        return view('create', $data);
+        $tshirt = Tshirt::findOrFail($id);
+        $model = $request->validated('model');
+        $size = $request->validated('size');
+        $img = $request->validated('img_selected');
+        Storage::copy('public/img/modelsTshirt/'.$model.'.png','public/img/merged/'.$model.'.png');
+        $imgInterService->mergedImage($model, $img, $size, true);
+        $tshirt -> model = $model;
+        $tshirt -> size = $size;
+        $tshirt -> url_img ='storage/img/merged/'.$model.'_'.$size.'_merged_'.substr(basename($img),0,-4).'.png';
+        $tshirt -> name_img = $img;
+        $tshirt->update();
+        return redirect('/tshirt')->with('success', 'Votre t-shirt a été modifié avec succèss !');
     }
 
     /**

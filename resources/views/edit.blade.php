@@ -33,14 +33,26 @@
                     <div class="col-6">
                         <h5 class="mx-2">Tailles :</h5>
                         <div class="mt-4">
-                            <input type="radio" id="sizeS" class="form-check-input mx-2" name="size" value="S">
-                            <label class="form-check-label mx-2" for="sizeS">Small</label>
-                            <input type="radio" id="sizeM" class="form-check-input mx-2" name="size" value="M">
-                            <label class="form-check-label mx-2" for="sizeM">Medium</label>
-                            <input type="radio" id="sizeL" class="form-check-input mx-2" name="size" value="L">
-                            <label class="form-check-label mx-2" for="sizeL">Large</label>
-                            <input type="radio" id="sizeXL" class="form-check-input mx-2" name="size" value="XL">
-                            <label class="form-check-label mx-2" for="sizeXL">XtraLarge</label>
+                            @if($tshirt->model == 'S')
+                                <input type="radio" id="sizeS" class="form-check-input mx-2" name="size" value="S" checked>
+                            @endif
+                                <input type="radio" id="sizeS" class="form-check-input mx-2" name="size" value="S">
+                                <label class="form-check-label mx-2" for="sizeS">Small</label>
+                            @if($tshirt->model == 'M')
+                                <input type="radio" id="sizeM" class="form-check-input mx-2" name="size" value="M" checked>
+                            @endif
+                                <input type="radio" id="sizeM" class="form-check-input mx-2" name="size" value="M">
+                                <label class="form-check-label mx-2" for="sizeM">Medium</label>
+                            @if($tshirt->model == 'M')
+                                <input type="radio" id="sizeL" class="form-check-input mx-2" name="size" value="L" checked>
+                            @endif
+                                <input type="radio" id="sizeL" class="form-check-input mx-2" name="size" value="L">
+                                <label class="form-check-label mx-2" for="sizeL">Large</label>
+                            @if($tshirt->model == 'M')
+                                <input type="radio" id="sizeXL" class="form-check-input mx-2" name="size" value="XL" checked>
+                            @endif
+                                <input type="radio" id="sizeXL" class="form-check-input mx-2" name="size" value="XL">
+                                <label class="form-check-label mx-2" for="sizeXL">XtraLarge</label>
                         </div>
                     </div>
                     <div class="col-6">
@@ -124,14 +136,14 @@
                 </div>
                 @if($imgSelected)
                     <div class="mt-4">
-                        <form method="post" action="{{ route('tshirt.update') }}" class="d-flex justify-content-center">
+                        <form method="post" action="{{ route('tshirt.update', [$tshirt]) }}" class="d-flex justify-content-center">
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name="model" value="{{$model}}">
                             <input type="hidden" name="size" value="{{$size}}">
                             <input type="hidden" name="img_selected" value="{{$imgSelected}}">
                             <input type="hidden" name="url_img" value="{{$mergeImg}}">
-                            <button type="submit" class="btn btn-warning mt-2 col-3">Valider mon choix</button>
+                            <button type="submit" class="btn btn-warning mt-2 col-3">Mettre à jour</button>
                         </form>
                     </div>
                 @endif

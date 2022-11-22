@@ -10,11 +10,15 @@ class ImageInterventionController extends Controller
 {
     public function mergeImages(string $model, string $imgSelected, string $size, ImageInterventionService $imgInterService)
     {
-        return $imgInterService->mergedImage($model, $imgSelected, $size);
+        return $imgInterService->mergedImage($model, $imgSelected, $size , 'predefinedPicturesGallery');
     }
 
     public function saveMergedImages(string $model, string $imgSelected,  string $size, ImageInterventionService $imgInterService){
-        return $imgInterService->mergedImage($model, $imgSelected, $size, true);
+        return $imgInterService->mergedImage($model, $imgSelected, $size, 'predefinedPicturesGallery', true);
+    }
+
+    public function upload(string $model, string $imgSelected,  string $size, ImageInterventionService $imgInterService){
+        return $imgInterService->mergedImage($model, $imgSelected, $size, 'predefinedPicturesGallery', true);
     }
 
 }

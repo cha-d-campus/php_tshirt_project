@@ -28,9 +28,6 @@
             <li class="nav-item">
                 <a class="nav-link link-dark" href="{{ route('tshirt.index') }}">Voir ma liste</a>
             </li>
-{{--            <li class="nav-item">--}}
-{{--                <a class="nav-link link-dark" href="#">Link 3</a>--}}
-{{--            </li>--}}
         </ul>
     </div>
 </nav>

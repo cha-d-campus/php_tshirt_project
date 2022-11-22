@@ -47,8 +47,8 @@
                         <td class="align-middle">
                             <div class="d-flex d-inline">
                                 <button type="button" class="btn mx-2" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal">
-                                    <img src="../storage/img/icons/icon_show_color.png" alt="icone modifier"
+                                        data-bs-target="#toto_{{$tshirt->id}}">
+                                    <img src="../storage/img/icons/icon_show_color.png" alt="icone voir"
                                          style="width: 26px; height: auto">
                                 </button>
                                 <a href="{{ route('tshirt.edit', $tshirt->id)}}" class="btn mx-2">
@@ -58,32 +58,32 @@
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn mx-2" type="submit">
-                                        <img src="../storage/img/icons/icon_trash_color.png" alt="icone modifier"
+                                        <img src="../storage/img/icons/icon_trash_color.png" alt="icone supprimer"
                                              style="width: 26px; height: auto">
                                     </button>
                                 </form>
                             </div>
                         </td>
                     </tr>
+                    <!-- Modal -->
+                    <div class="modal fade" id="toto_{{$tshirt->id}}" tabindex="-1" aria-labelledby="exampleModalLabel_{{$tshirt->id}}_{{$tshirt->name_img}}"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel_{{$tshirt->id}}_{{$tshirt->name_img}}">T-shirt : {{substr($tshirt->model, 7)}}
+                                        | Taille : {{$tshirt->size}}</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <img src="{{$tshirt->url_img}}" alt="img-tshirt" class="img-thumbnail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
                 </tbody>
             </table>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">T-shirt : {{substr($tshirt->model, 7)}}
-                            | Taille : {{$tshirt->size}}</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <img src="{{$tshirt->url_img}}" alt="img-tshirt" class="img-thumbnail">
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 @endsection

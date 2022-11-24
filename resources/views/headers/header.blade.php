@@ -18,7 +18,7 @@
 <nav class="navbar bg-light px-5 pt-3">
     <div class="container-fluid">
         <a class="navbar-brand fs-2 mx-3" href="/">
-            <img src="../storage/img/logo/Logo.png" alt="Logo" width="65" height="auto" class="d-inline-block align-text-bottom">
+            <img src="{{asset('storage/img/logo/Logo.png')}}" alt="Logo" width="65" height="auto" class="d-inline-block align-text-bottom">
             Custom'|T
         </a>
         <ul class="nav pl-3 pt-3 fs-4">

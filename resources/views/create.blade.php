@@ -62,7 +62,6 @@
                             @endforeach
                         </div>
                     </div>
-                    {{--<button type="submit" class="btn btn-warning mt-2 col-3">Sélectionner</button>--}}
                 </form>
             </div>
             @php
@@ -74,27 +73,34 @@
                     <h4 class="fw-light text-center text-lg-start mt-2 mb-0">Choisir un design :</h4>
                     <hr class="mt-2 mb-4">
                     <div class="col-6 mt-2">
+                        @php
+                            $folder = 'predefinedPicturesGallery';
+                        @endphp
+                        @if(session()->get('file'))
+                            {{ $imgSelected = session()->get('file') }}
+                            {{ $folder = 'uploaded' }}
+                        @endif
                         @if($model == 'tshirt-black')
                             @if($imgSelected)
                             @php
-                                $mergeImg = route('mergeImages', [$model, $imgSelected, $size]);
+                                $mergeImg = route('mergeImages', [$model, $size, $folder, $imgSelected]);
                             @endphp
                             {{-- Mettre une route capable d'afficher mon rendu --}}
-                                <img class="img-thumbnail" src="{{$mergeImg}}"
+                                <img class="img-thumbnail" src="{{asset($mergeImg)}}"
                                      alt="T-shirt black - {{$imgSelected}} ">
                             @else
-                                <img class="img-thumbnail" src="../storage/img/modelsTshirt/tshirt-black.png"
+                                <img class="img-thumbnail" src="{{asset('storage/img/modelsTshirt/tshirt-black.png')}}"
                                      alt="T-shirt Homme">
                             @endif
                         @elseif($model == 'tshirt-white')
                             @if($imgSelected)
                                 @php
-                                    $mergeImg = route('mergeImages', [$model, $imgSelected, $size]);
+                                    $mergeImg = route('mergeImages', [$model, $size, $folder, $imgSelected]);
                                 @endphp
-                                <img class="img-thumbnail" src="{{$mergeImg}}"
+                                <img class="img-thumbnail" src="{{asset($mergeImg)}}"
                                      alt="T-shirt black - {{$imgSelected}} ">
                             @else
-                            <img class="img-thumbnail" src="../storage/img/modelsTshirt/tshirt-white.png"
+                            <img class="img-thumbnail" src="{{asset('storage/img/modelsTshirt/tshirt-white.png')}}"
                                  alt="T-shirt Femme">
                             @endif
                         @endif
@@ -120,6 +126,17 @@
                                 @endforeach
                             </div>
                         </form>
+                        <form action="{{route('upload')}}" method="post" enctype="multipart/form-data">
+                            <h5 class="fw-light text-center text-lg-start mt-1 mb-4">Design custom</h5>
+                            @csrf
+                            <div class="custom-file">
+                                <input type="file" name="uploaded_file" class="custom-file-input" id="chooseFile">
+                                <label class="custom-file-label" for="chooseFile">Select file</label>
+                            </div>
+                            <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">
+                                Télécharger l'image
+                            </button>
+                        </form>
                     </div>
                 </div>
                 @if($imgSelected)
@@ -128,6 +145,7 @@
                             @csrf
                             <input type="hidden" name="model" value="{{$model}}">
                             <input type="hidden" name="size" value="{{$size}}">
+                            <input type="hidden" name="folder" value="{{$folder}}">
                             <input type="hidden" name="img_selected" value="{{$imgSelected}}">
                             <input type="hidden" name="url_img" value="{{$mergeImg}}">
                             <button type="submit" class="btn btn-warning mt-2 col-3">Valider mon choix</button>

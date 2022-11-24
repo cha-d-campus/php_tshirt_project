@@ -48,17 +48,17 @@
                             <div class="d-flex d-inline">
                                 <button type="button" class="btn mx-2" data-bs-toggle="modal"
                                         data-bs-target="#toto_{{$tshirt->id}}">
-                                    <img src="../storage/img/icons/icon_show_color.png" alt="icone voir"
+                                    <img src="{{asset('storage/img/icons/icon_show_color.png')}}" alt="icone voir"
                                          style="width: 26px; height: auto">
                                 </button>
                                 <a href="{{ route('tshirt.edit', $tshirt->id)}}" class="btn mx-2">
-                                    <img src="../storage/img/icons/icon_modify_color.png" alt="icone modifier"
+                                    <img src="{{asset('storage/img/icons/icon_modify_color.png')}}" alt="icone modifier"
                                          style="width: 26px; height: auto"></a>
                                 <form action="{{ route('tshirt.destroy', $tshirt->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn mx-2" type="submit">
-                                        <img src="../storage/img/icons/icon_trash_color.png" alt="icone supprimer"
+                                        <img src="{{asset('storage/img/icons/icon_trash_color.png')}}" alt="icone supprimer"
                                              style="width: 26px; height: auto">
                                     </button>
                                 </form>

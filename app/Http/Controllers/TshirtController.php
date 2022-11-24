@@ -32,6 +32,7 @@ class TshirtController extends Controller
     {
         $images = Storage::disk('public')->allFiles('img/predefinedPicturesGallery');
         $modelColor = Storage::disk('public')->allFiles('img/modelsTshirt');
+        $imgUploaded = Storage::disk('public')->allFiles('img/uploaded');
         $data = [
             'modelColor' => $modelColor,
             'model' => $request->input('model'),
@@ -54,9 +55,10 @@ class TshirtController extends Controller
     {
         $model = $request->validated('model');
         $size = $request->validated('size');
+        $folder = $request->validated('folder');
         $img = $request->validated('img_selected');
         Storage::copy('public/img/modelsTshirt/'.$model.'.png','public/img/merged/'.$model.'.png');
-        $imgInterService->mergedImage($model, $img, $size, true);
+        $imgInterService->mergedImage($model, $size, $folder, $img, true);
         $tshirt = new Tshirt();
         $tshirt -> model = $model;
         $tshirt -> size = $size;
@@ -97,6 +99,7 @@ class TshirtController extends Controller
                 'modelColor' => $modelColor,
                 'model' => $model,
                 'size'  => $size,
+                'folder' => $request->input('folder'),
                 'images' => $images,
                 'imgSelected' => $img,
                 'url_img' => $request->input('url_img')
@@ -118,9 +121,10 @@ class TshirtController extends Controller
         $tshirt = Tshirt::findOrFail($id);
         $model = $request->validated('model');
         $size = $request->validated('size');
+        $folder = $request->validated('folder');
         $img = $request->validated('img_selected');
         Storage::copy('public/img/modelsTshirt/'.$model.'.png','public/img/merged/'.$model.'.png');
-        $imgInterService->mergedImage($model, $img, $size, true);
+        $imgInterService->mergedImage($model, $size, $folder, $img, true);
         $tshirt -> model = $model;
         $tshirt -> size = $size;
         $tshirt -> url_img ='storage/img/merged/'.$model.'_'.$size.'_merged_'.substr(basename($img),0,-4).'.png';

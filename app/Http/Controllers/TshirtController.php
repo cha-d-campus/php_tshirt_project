@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TshirtFormRequest;
+use App\Jobs\ProcessPDF;
 use App\Providers\TshirtCreated;
+use App\Services\GeneratorPDFService;
 use App\Services\ImageInterventionService;
 use Illuminate\Http\Request;
 use App\Models\Tshirt;
@@ -52,7 +54,7 @@ class TshirtController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TshirtFormRequest $request, ImageInterventionService $imgInterService)
+    public function store(TshirtFormRequest $request, ImageInterventionService $imgInterService, GeneratorPDFService $generatorPDFService)
     {
         $model = $request->validated('model');
         $size = $request->validated('size');
@@ -66,7 +68,7 @@ class TshirtController extends Controller
         $tshirt -> url_img ='storage/img/merged/'.$model.'_'.$size.'_merged_'.substr(basename($img),0,-4).'.png';
         $tshirt -> name_img = $img;
         $tshirt ->save();
-        TshirtCreated::dispatch($tshirt);
+        ProcessPDF::dispatch($tshirt, $generatorPDFService)->delay(now()->addSecond(10));
         return redirect('/tshirt')->with('success', 'Votre t-shirt a été créé avec succèss !');
     }
 

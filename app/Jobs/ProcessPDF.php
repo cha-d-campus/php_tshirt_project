@@ -2,7 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Http\Controllers\GeneratorPDF;
 use App\Models\Tshirt;
+use App\Providers\TshirtCreated;
+use App\Services\GeneratorPDFService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,7 +21,8 @@ class ProcessPDF implements ShouldQueue
      *
      * @var \App\Models\Tshirt
      */
-    public $tshirt;
+    protected $tshirt;
+    protected $generatorPDFService;
 
 
     /**
@@ -26,9 +30,10 @@ class ProcessPDF implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Tshirt $tshirt)
+    public function __construct(Tshirt $tshirt, GeneratorPDFService $generatorPDFService)
     {
         $this->tshirt = $tshirt;
+        $this->generatorPDFService = $generatorPDFService;
     }
 
     /**
@@ -38,6 +43,6 @@ class ProcessPDF implements ShouldQueue
      */
     public function handle()
     {
-        //
+        $this->generatorPDFService->save($this->tshirt);
     }
 }

@@ -27,7 +27,7 @@ class SendEmailMessageWhenTshirtCreated
      */
     public function handle(TshirtCreated $event)
     {
-        dd('mail bien envoyé');
-        Mail::to('exemplemail@mail.com')->send(new \App\Mail\TshirtCreated($event->tshirt));
+        //Mail::to('exemplemail@mail.com')->send(new \App\Mail\TshirtCreated($event->tshirt));
+        return view('index');
     }
 }

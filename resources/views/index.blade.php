@@ -51,6 +51,9 @@
                                     <img src="{{asset('storage/img/icons/icon_show_color.png')}}" alt="icone voir"
                                          style="width: 26px; height: auto">
                                 </button>
+                                <a href="{{ route('getTshirtPdf', $tshirt->id)}}" class="btn mx-2">
+                                    <img src="{{asset('storage/img/icons/icon_upload_pdf.png')}}" alt="icone pdf"
+                                         style="width: 26px; height: auto"></a>
                                 <a href="{{ route('tshirt.edit', $tshirt->id)}}" class="btn mx-2">
                                     <img src="{{asset('storage/img/icons/icon_modify_color.png')}}" alt="icone modifier"
                                          style="width: 26px; height: auto"></a>

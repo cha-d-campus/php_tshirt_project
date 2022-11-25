@@ -104,6 +104,15 @@
                                  alt="T-shirt Femme">
                             @endif
                         @endif
+                        <h5 class="fw-light text-center text-lg-start mt-3 mb-4">Repositionner l'image :</h5>
+                        <form method="get" action="{{ route('tshirt.create') }}" enctype="multipart/form-data">
+                            <label for="customRangeSize" class="form-label">Taille de l'image</label>
+                            <input type="range" class="form-range" min="480" max="580" step="0.5" name="imgSize" id="customRangeSize">
+                            <label for="customRangePositionX" class="form-label">Position horizontale</label>
+                            <input type="range" class="form-range" min="1100" max="1300" step="10" name="posX" id="customRangePositionX">
+                            <label for="customRangePositionY" class="form-label">Position verticale</label>
+                            <input type="range" class="form-range" min="350" max="650" step="10" name="posY" id="customRangePositionY">
+                        </form>
                     </div>
                     <div class="col-6">
                         <h5 class="fw-light text-center text-lg-start mt-1 mb-4">Design proposés :</h5>
@@ -145,6 +154,9 @@
                             @csrf
                             <input type="hidden" name="model" value="{{$model}}">
                             <input type="hidden" name="size" value="{{$size}}">
+{{--                            <input type="hidden" name="imgSize" value="{{$imgSize}}">--}}
+{{--                            <input type="hidden" name="posX" value="{{$posX}}">--}}
+{{--                            <input type="hidden" name="posY" value="{{$posY}}">--}}
                             <input type="hidden" name="folder" value="{{$folder}}">
                             <input type="hidden" name="img_selected" value="{{$imgSelected}}">
                             <input type="hidden" name="url_img" value="{{$mergeImg}}">

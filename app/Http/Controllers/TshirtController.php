@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TshirtFormRequest;
+use App\Providers\TshirtCreated;
 use App\Services\ImageInterventionService;
 use Illuminate\Http\Request;
 use App\Models\Tshirt;
@@ -65,6 +66,7 @@ class TshirtController extends Controller
         $tshirt -> url_img ='storage/img/merged/'.$model.'_'.$size.'_merged_'.substr(basename($img),0,-4).'.png';
         $tshirt -> name_img = $img;
         $tshirt ->save();
+        TshirtCreated::dispatch($tshirt);
         return redirect('/tshirt')->with('success', 'Votre t-shirt a été créé avec succèss !');
     }
 
@@ -76,7 +78,7 @@ class TshirtController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('show', ['tshirt' => Tshirt::where('id',$id)->first()]);
     }
 
     /**

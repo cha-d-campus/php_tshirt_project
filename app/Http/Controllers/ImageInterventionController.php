@@ -9,14 +9,14 @@ use Symfony\Component\Console\Input\Input;
 
 class ImageInterventionController extends Controller
 {
-    public function mergeImages(string $model, string $imgSelected, string $folder, string $size, ImageInterventionService $imgInterService)
+    public function mergeImages(string $model, string $size, string $folder, string $imgSelected, ImageInterventionService $imgInterService)
     {
-        return $imgInterService->mergedImage($model, $imgSelected, $folder, $size);
+        return $imgInterService->mergedImage($model, $size, $folder, $imgSelected);
     }
 
-//    public function saveMergedImages(string $model, string $imgSelected, string $folder, string $size, ImageInterventionService $imgInterService){
-//        return $imgInterService->mergedImage($model, $imgSelected, $size, true);
-//    }
+    public function saveMergedImages(string $model, string $imgSelected, string $folder, string $size, ImageInterventionService $imgInterService){
+        return $imgInterService->mergedImage($model, $imgSelected, $size, true);
+    }
 
     public function upload(){
         $filename = 'uploadedImg-'.random_int(0,50).'.png';
